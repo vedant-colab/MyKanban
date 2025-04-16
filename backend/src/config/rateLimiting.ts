@@ -6,4 +6,7 @@ export const apiLimiter = rateLimit({
     standardHeaders : true,
     legacyHeaders : false,
     message : "Too many requests from this ip, please try again after some time.",
+    keyGenerator: (req) => {
+        return req.ip || req.headers["x-forwarded-for"]?.toString() || "unknown-ip";
+      },
 })
